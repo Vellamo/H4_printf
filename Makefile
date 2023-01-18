@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: lharvey <lharvey@student.hive.fi>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/01 11:41:06 by lharvey           #+#    #+#              #
-#    Updated: 2022/11/24 12:07:10 by lharvey          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 .SUFFIXES:
 .SUFFIXES: .c .h .o .a
 
@@ -20,6 +8,7 @@ HEDR := libftprintf.h
 
 DIR_SRC := sources/
 DIR_OBJ := obj/
+LIBFT := libft/
 VPATH = $(DIR_SRC)
 
 SRC = libftprintf.c
@@ -41,6 +30,9 @@ $(NAME): $(OBJ)
 	$(COMPILE) $(OBJ) -o $@
 	$(ADD_LIB) $(OBJ)
 
+$(LIBFT):
+	$(MAKE) -C libft/make all
+
 $(DIR_OBJ):
 	mkdir $@
 
@@ -49,6 +41,7 @@ $(DIR_OBJ)%.o:%.c | $(DIR_OBJ)
 
 clean:
 	rm -rf $(DIR_OBJ) 
+	$(MAKE) -C libft/make clean
 
 fclean: clean
 	rm -f $(NAME) 
