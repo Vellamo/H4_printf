@@ -26,8 +26,8 @@ Bonus:
     • - Value left adjusted on the field boundary. (Default is right justification). Padded with blanks. Overrides 0.
     • 0 Value should be zero padded. If precision is given with a numeric conversion, 0 flag ignored.
     • . (With number): min. characters to be printed. If min. characters exceeds the number, the result is padded with spaces. (Without number) : Precision character flag, defines the precision as to be in an additional inveger value argument that precedes the argument to be formatted.
-• Manage all the following flags: ’# +’ (Yes, one of them is a space)
-    • # Multiple specifiers.
+• Manage all the following flag characters: ’# +’ (Yes, one of them is a space)
+    • # Value converted to alternative form. Multiple specifiers.
     • (Blank space) If no sign is written, a blank space is inserted before the value.
     • + Forces result to be preceded by + or - sign. Only negative numbers are preceeded by a -, by default.
 
