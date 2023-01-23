@@ -13,21 +13,62 @@ Requirements:
 	
     t_flags.flag; 
     - 1000 0000 (1)    0 0100 0000 (2)    . 0010 0000 (4)
-    # 0001 0000 (8)    x 0000 1000 (16)
+    # 0001 0000 (8)    x 0000 1000 (16)   % 0000 0100 (32)
 
 */
 
 #include "libftprintf.h"
 
+static unsigned int flag_test (char test_chr)
+{
+    if (test_chr == '-')
+        return (1);
+    if (test_chr == '0')
+        return (2);
+    if (test_chr == '.') 
+        return (4);
+    if (test_chr == '#')
+        return (8);
+    if (test_chr == 'x')
+        return (16);
+    if (test_chr == '%')
+        return (32);
+    else 
+        return (0);
+}
+
 int ft_printf(const char *input, ...)
 {
-    *t_flags        strct_head;
-    *t_flags        strct_current;
+    *t_flags        t_cnvrsn;
+    int             chr_count;
     va_list         args;
-    unsigned int    args_total;
-    
+ 
+    if (!input)    
+        return (-1);
+    chr_count = 0;
     va_start(args, input);
-    strct_head = (t_flags)malloc(sizeof(t_flags));
+    while (input[chr_count])
+    {
+        if (input[chr_count] != flag_test)
+            output_str[chr_count] == input[chr_count];
+        else
+            prcss_cnvrsn(input[chr_count], &chr_count, &args);
+        chr_count++;
+    }
+    va_end(args);
+    return (chr_count);
+}
+
+int main(int argc, char **argv)
+{
+    unsigned int    max_args;
+
+    max_args = 0;
+	if (argc <= 1)
+	{
+		fprintf(stderr, "Something went VERY wrong.\n");
+		return (-1);
+	}
 
 
 }
