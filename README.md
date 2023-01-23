@@ -22,8 +22,14 @@ The goal of this project is to implement a custom version of the "printf" functi
 • %% Prints a percent sign.
 
 Bonus:
-• Manage any combination of the following flags: ’-0.’ and the field minimum width under all conversions.
+• Manage any combination of the following flag characters: ’-0.’ and the field minimum width under all conversions.
+    • - Value left adjusted on the field boundary. (Default is right justification). Padded with blanks. Overrides 0.
+    • 0 Value should be zero padded. If precision is given with a numeric conversion, 0 flag ignored.
+    • . (With number): min. characters to be printed. If min. characters exceeds the number, the result is padded with spaces. (Without number) : Precision character flag, defines the precision as to be in an additional inveger value argument that precedes the argument to be formatted.
 • Manage all the following flags: ’# +’ (Yes, one of them is a space)
+    • # Multiple specifiers.
+    • (Blank space) If no sign is written, a blank space is inserted before the value.
+    • + Forces result to be preceded by + or - sign. Only negative numbers are preceeded by a -, by default.
 
 ### Scope: 
 The scope of this project includes the implementation of the "printf" function, as well as any necessary supporting functions or data types. The project will not include the implementation of any additional formatting specifiers beyond those specified as part of the project, unless deemed neccesary as "hidden requirements" for the function of the ones defined in the brief.
@@ -48,3 +54,5 @@ The design of the project will involve the following steps:
 #### Initial Phase
 1. Divide required functions into sub-functions.
 2. Identify pitfalls / common-issues in input sanitisation/processing.
+3. Identify return values from standardlib Printf.
+4. Consider flag order of prescidence and contradictive behaviours. 
