@@ -13,28 +13,59 @@ Requirements:
 	
     t_flags.flag; 
     - 1000 0000 (1)    0 0100 0000 (2)    . 0010 0000 (4)
-    # 0001 0000 (8)    x 0000 1000 (16)   % 0000 0100 (32)
+    # 0001 0000 (8)      0000 1000 (16)   + 0000 0100 (32)
 
 */
 
 #include "libftprintf.h"
 
-static unsigned int flag_test (char test_chr)
+
+short reverseShort (short s) 
 {
-    if (test_chr == '-')
-        return (1);
-    if (test_chr == '0')
-        return (2);
-    if (test_chr == '.') 
-        return (4);
-    if (test_chr == '#')
-        return (8);
-    if (test_chr == 'x')
-        return (16);
-    if (test_chr == '%')
-        return (32);
+    unsigned char c1, c2;
+    
+    if (is_bigendian())
+	    return s;
     else 
-        return (0);
+	{
+        c1 = s & 255;
+        c2 = (s >> 8) & 255;
+    
+        return (c1 << 8) + c2;
+    }
+}
+
+/* IBM suggested way to determine endianness at runtime
+*/
+
+int endian_test(short i) 
+{
+    int i = 1;
+    char *p = (char *)&i;
+
+    if (p[0] == 1)
+        return (LITTLE_ENDIAN);
+    else
+        return (BIG_ENDIAN);
+}
+
+short flag_test (char test_chr)
+{
+	short i = 0;
+	
+    if (test_chr == '-')
+        (i + 1);
+    if (test_chr == '0')
+        (i + 2);
+    if (test_chr == '.') 
+        (i + 4);
+    if (test_chr == '#')
+        (i + 8);
+    if (test_chr == 'x')
+        (i + 16); 
+    if (test_chr == '%')
+        (i + 32);
+    return (i);
 }
 
 int ft_printf(const char *input, ...)
