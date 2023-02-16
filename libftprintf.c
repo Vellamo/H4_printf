@@ -20,38 +20,9 @@ Requirements:
 #include "libftprintf.h"
 
 
-short reverseShort (short s) 
+int_fast8_t cnsvn_test (char test_chr)
 {
-    unsigned char c1, c2;
-    
-    if (is_bigendian())
-	    return s;
-    else 
-	{
-        c1 = s & 255;
-        c2 = (s >> 8) & 255;
-    
-        return (c1 << 8) + c2;
-    }
-}
-
-/* IBM suggested way to determine endianness at runtime
-*/
-
-int endian_test(short i) 
-{
-    int i = 1;
-    char *p = (char *)&i;
-
-    if (p[0] == 1)
-        return (LITTLE_ENDIAN);
-    else
-        return (BIG_ENDIAN);
-}
-
-short flag_test (char test_chr)
-{
-	short i = 0;
+	int_fast8_t i = 0;
 	
     if (test_chr == '-')
         (i + 1);
@@ -61,11 +32,44 @@ short flag_test (char test_chr)
         (i + 4);
     if (test_chr == '#')
         (i + 8);
-    if (test_chr == 'x')
+    if (test_chr == ' ')
         (i + 16); 
-    if (test_chr == '%')
+    if (test_chr == '+')
         (i + 32);
     return (i);
+}
+
+int_fast8_t flag_test (char test_chr)
+{
+	int_fast8_t i = 0;
+	
+    if (test_chr == 'c')
+        (i + 1);
+    else if (test_chr == 's')
+        (i + 2);
+    else if (test_chr == 'p') 
+        (i + 3);
+    else if (test_chr == 'd')
+        (i + 4);
+    else if (test_chr == 'i')
+        (i + 5); 
+    else if (test_chr == 'u')
+        (i + 6);
+	else if (test_chr == 'x')
+        (i + 7);
+	else if (test_chr == 'X')
+        (i + 8);
+	else if (test_chr == '%')
+        (i + 9);
+    return (i);
+}
+
+// cspdiuxX%
+// -0. # +
+
+int	prcss_cnvrsn(const char input, va_list args)
+{
+
 }
 
 int ft_printf(const char *input, ...)
@@ -83,7 +87,7 @@ int ft_printf(const char *input, ...)
         if (input[chr_count] != flag_test)
             output_str[chr_count] == input[chr_count];
         else
-            prcss_cnvrsn(input[chr_count], &chr_count, &args);
+            prcss_cnvrsn(input[chr_count], &args);
         chr_count++;
     }
     va_end(args);
