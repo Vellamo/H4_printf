@@ -7,11 +7,11 @@
 #include <stdarg.h>
 
 int ft_printf(const char *, ...);
-typedef struct s_flags
+typedef struct s_printf
 {
     char            *string; 
-    int_fast8_t     cnrvsn:4;
+    int_fast8_t     cnrvsn;
     int_fast8_t     flag;
-}					t_flags;
+}					t_printf;
 
 #endif

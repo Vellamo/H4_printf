@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libftprintf.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lharvey <lharvey@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/16 12:45:47 by lharvey           #+#    #+#             */
+/*   Updated: 2023/02/16 12:45:55 by lharvey          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 /*
 Requirements:
 • Don’t implement the buffer management of the original printf().
@@ -19,6 +31,7 @@ Requirements:
 
 #include "libftprintf.h"
 
+/* Uses 6 bits as flags for possible conversion */
 
 int_fast8_t cnsvn_test (char test_chr)
 {
@@ -38,6 +51,8 @@ int_fast8_t cnsvn_test (char test_chr)
         (i + 32);
     return (i);
 }
+
+/* Also uses bits, but in a lossy way where one flag may overwrite another */
 
 int_fast8_t flag_test (char test_chr)
 {
@@ -65,10 +80,17 @@ int_fast8_t flag_test (char test_chr)
 }
 
 // cspdiuxX%
-// -0. # +
+// -0.# + 
 
-int	prcss_cnvrsn(const char input, va_list args)
+int	prcss_cnvrsn(const char input, int *chr_count, va_list args)
 {
+	int_fast8_t	cnsvn_flag;
+	int_fast8_t	flag;
+
+	cnsvn_flag = 0;
+	flag = 0;
+
+	
 
 }
 
@@ -84,13 +106,17 @@ int ft_printf(const char *input, ...)
     va_start(args, input);
     while (input[chr_count])
     {
-        if (input[chr_count] != flag_test)
-            output_str[chr_count] == input[chr_count];
+        if (input[chr_count] == '%')
+		{
+			if (flag_test(input[chr_count + 1]) || (cnsvn_test(input[chr_count + 1])))
+				prcss_cnvrsn(input[chr_count], &chr_count, &args);				
+		}
         else
-            prcss_cnvrsn(input[chr_count], &args);
+            ft_strjoin(input[chr_count], t_cvnrsn->string);
         chr_count++;
     }
     va_end(args);
+
     return (chr_count);
 }
 
