@@ -82,7 +82,7 @@ int_fast8_t flag_test (char test_chr)
 // cspdiuxX%
 // -0.# + 
 
-int	prcss_cnvrsn(const char input, int *chr_count, va_list args)
+int	prcss_cnvrsn(const char input, const int *chr_count, const va_list args)
 {
 	int_fast8_t	cnsvn_flag;
 	int_fast8_t	flag;
