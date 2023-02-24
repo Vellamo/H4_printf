@@ -82,15 +82,30 @@ int_fast8_t flag_test (char test_chr)
 // cspdiuxX%
 // -0.# + 
 
-int	prcss_cnvrsn(const char input, const int *chr_count, const va_list args)
+char    *printf_converter(char *input, t_flags *t_cnvrsn)
 {
-	int_fast8_t	cnsvn_flag;
-	int_fast8_t	flag;
+    if (t_cnvrsn->cnsvn_flag)
+        {
+            
+        }
+}
 
-	cnsvn_flag = 0;
-	flag = 0;
+int	prcss_cnvrsn(char *input, int *chr_count, va_list *args, t_flags *t_cnvrsn)
+{
+    int         i;
+    char        *string;
 
-	
+    i = 1;
+    while (flag_test(input[chr_count + i]) || (cnsvn_test(input[chr_count + i])))
+    {
+	    t_cnvrsn->char_flag = flag_test(input[chr_count + i]);
+        t_cnvrsn->cnsvn_flag |= cnsvn_test(input[chr_count + i]);
+        i++;
+    }
+    ft_strjoin(printf_converter(input), t_cnvrsn->string)
+    *chr_count += i;
+    arg_num++;
+    va_arg(*args, *input)
 
 }
 
@@ -103,20 +118,20 @@ int ft_printf(const char *input, ...)
     if (!input)    
         return (-1);
     chr_count = 0;
+    *t_cnvrsn = (t_flags)malloc(sizeof(t_flags));
     va_start(args, input);
     while (input[chr_count])
     {
         if (input[chr_count] == '%')
 		{
 			if (flag_test(input[chr_count + 1]) || (cnsvn_test(input[chr_count + 1])))
-				prcss_cnvrsn(input[chr_count], &chr_count, &args);				
+				prcss_cnvrsn(&(input[chr_count]), &chr_count, &args, t_cnvrsn);				
 		}
         else
-            ft_strjoin(input[chr_count], t_cvnrsn->string);
+            ft_strjoin(input[chr_count], t_cnvrsn->string);
         chr_count++;
     }
     va_end(args);
-
     return (chr_count);
 }
 
