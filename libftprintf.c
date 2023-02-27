@@ -132,7 +132,7 @@ int ft_printf(const char *input, ...)
         chr_count++;
     }
     va_end(args);
-	write(1, _cnvrsn->string, chr_count)
+	write(1, _cnvrsn->string, chr_count);
     return (chr_count);
 }
 
