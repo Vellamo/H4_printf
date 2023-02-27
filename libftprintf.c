@@ -122,7 +122,7 @@ int ft_printf(const char *input, ...)
     va_start(args, input);
     while (input[chr_count])
     {
-        if (input[chr_count] == '%')
+        if (input[chr_count] == '%' && input[chr_count + 1])
 		{
 			if (flag_test(input[chr_count + 1]) || (cnsvn_test(input[chr_count + 1])))
 				prcss_cnvrsn(&(input[chr_count]), &chr_count, &args, t_cnvrsn);				
