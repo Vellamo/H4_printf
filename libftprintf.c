@@ -37,35 +37,30 @@ int_fast8_t flag_test (char test_chr)
     else return (-1);
 }
 
-// cspdiuxX%
-
 void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
 {
     char    char_flag;
     char    *string;
 
     char_flag = flag_test(input[*chr_count]);
-    if (char_flag == 1 || char_flag == 2)
+    if (char_flag == 1)
+        string = (char *)va_arg(ap, char);
+    if (char_flag == 2)
     {
     	string = va_arg(ap, char *);
 	    if (!(*string))
 		    string = "(null)";
     }
-
 	else if (char_flag == 4 || char_flag == 5 || char_flag == 6)
     {
         string = ft_itoa((long long int)(va_arg(args, int)));
     }
 	else if (char_flag == 3 || char_flag == 7 || char_flag == 8)
     {
-        3: 
-        ft_itoa_base((long long int)(va_arg(args, int, 16)));
-        7 : 
-        ft_itoa_base((long long int)(va_arg(args, int, 16)));
-        ft_tolower;
-        8 : 
-        ft_itoa_base((long long int)(va_arg(args, int, 16)));
-        ft_toupper;
+        if (char_flag == 3) 
+            ft_itoa_base((long long int)(va_arg(args, void *, 16)));
+        else
+            ft_itoa_base((long long int)(va_arg(args, int, 16)));
     }
 	else if (char_flag == 9)
         string = "%";
@@ -78,13 +73,11 @@ void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
 
 int ft_printf(const char *input, ...)
 {
-    *t_flags    t_cnvrsn;
     va_list     args;
     int         chr_count;
  
     if (!input)    
         return (-1);
-
     chr_count = 0;
     va_start(args, input);
     while (*input)
