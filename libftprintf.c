@@ -10,30 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-Requirements:
-• Don’t implement the buffer management of the original printf().
-• Your function will be compared against the original printf().
-• You must use the command ar to create your library.
-• Your libftprintf.a has to be created at the root of your repository.
-• Your function has to handle the following conversions: cspdiuxX%
-
-    t_flags.cnvsn;
-    1000 0000 %c (1)    0100 0000 %s (2)    1100 0000 %p (3)
-    0010 0000 %d (4)    1010 0000 %i (5)    0110 0000 %u (6)
-    1110 0000 %x (7)    0001 0000 %X (8)    1001 0000 %% (9)
-
-*/
-
 #include "libftprintf.h"
 
-
-/* Also uses bits, but in a lossy way where one flag may overwrite another */
+/* Uses bits, but in a lossy way where one flag may overwrite another */
 
 int_fast8_t flag_test (char test_chr)
 {
-	int_fast8_t i = 0;
-	
     if (test_chr == 'c')
         return (1);
     else if (test_chr == 's')
@@ -52,54 +34,53 @@ int_fast8_t flag_test (char test_chr)
         return (8);
 	else if (test_chr == '%')
         return (9);
-    return (-1);
+    else return (-1);
 }
 
 // cspdiuxX%
 
-int     prcss_cnvrsn(va_list *args, int *chr_count)
+void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
 {
-    char         char_flag;
+    char    char_flag;
+    char    *string;
 
     char_flag = flag_test(input[*chr_count]);
-    // • %c Prints a single character.
-    if (char_flag == 1)
-        ft_putchar(va_arg(args, char *));
-        *chr_count++;
-	else if (char_flag == 2)
-    // • %s Prints a string (as defined by the common C convention).
+    if (char_flag == 1 || char_flag == 2)
+    {
+    	string = va_arg(ap, char *);
+	    if (!(*string))
+		    string = "(null)";
+    }
 
-	else if (char_flag == 3)
-    // • %p The void * pointer argument has to be printed in hexadecimal format.
-
-	else if (char_flag == 4)
-    // • %d Prints a decimal (base 10) number.
-
-	else if (char_flag == 5)
-    // • %i Prints an integer in base 10.
-
-	else if (char_flag == 6)
-    // • %u Prints an unsigned decimal (base 10) number.
-
-	else if (char_flag == 7)
-    // • %x Prints a number in hexadecimal (base 16) lowercase format.
-
-	else if (char_flag == 8)
-    // • %X Prints a number in hexadecimal (base 16) uppercase format.
-
+	else if (char_flag == 4 || char_flag == 5 || char_flag == 6)
+    {
+        string = ft_itoa((long long int)(va_arg(args, int)));
+    }
+	else if (char_flag == 3 || char_flag == 7 || char_flag == 8)
+    {
+        3: 
+        ft_itoa_base((long long int)(va_arg(args, int, 16)));
+        7 : 
+        ft_itoa_base((long long int)(va_arg(args, int, 16)));
+        ft_tolower;
+        8 : 
+        ft_itoa_base((long long int)(va_arg(args, int, 16)));
+        ft_toupper;
+    }
 	else if (char_flag == 9)
-    // • %% Prints a percent sign.
-        ft_putchar('%');
-        *chr_count++;
-    else
-        return (-1);
+        string = "%";
+    if (*string)
+    {
+        ft_putstr_fd(string, 1);
+        *chr_count += ft_strlen(string);
+    }
 }
 
 int ft_printf(const char *input, ...)
 {
-    *t_flags        t_cnvrsn;
-    va_list         args;
-    int             chr_count;
+    *t_flags    t_cnvrsn;
+    va_list     args;
+    int         chr_count;
  
     if (!input)    
         return (-1);
@@ -108,24 +89,23 @@ int ft_printf(const char *input, ...)
     va_start(args, input);
     while (*input)
     {
-        if (*input == '%' && *(input + 1))
+        if (*input == '%' && flag_test(*(input + 1)))
 		{
-			if (flag_test(*(input + 1)))
-				prcss_cnvrsn(&args, &chr_count);
+			prcss_cnvrsn(&args, &chr_count, input);
             input += 2;
 		}
         else if (*input == '\\' && *(input + 1))
         {
             if (ft_isspace(*(input + 1)))
             {
-                write(1, (input + 1), 1);
+                ft_putchar_fd(*(input + 1), 1);
                 chr_count++;
                 input += 2;
             }
         }
         else
         {
-            write(1, input, 1);
+            ft_putchar_fd(*input, 1);
             chr_count++;
             input += 1;
         }
