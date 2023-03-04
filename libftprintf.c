@@ -95,7 +95,7 @@ int ft_printf(const char *input, ...)
     va_start(args, input);
     while (*input)
     {
-        if (input[t_cnvrsn->chr_count] == '%')
+        if (input[chr_count] == '%' && input[chr_count + 1])
 		{
 			if (flag_test(input[t_cnvrsn->chr_count + 1]))
 				prcss_cnvrsn(input, &args, t_cnvrsn);				
@@ -105,7 +105,8 @@ int ft_printf(const char *input, ...)
         t_cnvrsn->chr_count++;
     }
     va_end(args);
-    return (t_cnvrsn->chr_count);
+	write(1, _cnvrsn->string, chr_count);
+    return (chr_count);
 }
 
 int main(int argc, char **argv)
