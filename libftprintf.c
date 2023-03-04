@@ -57,43 +57,42 @@ int_fast8_t flag_test (char test_chr)
 
 // cspdiuxX%
 
-int     prcss_cnvrsn(char *input, va_list *args, int *chr_count)
+int     prcss_cnvrsn(va_list *args, int *chr_count)
 {
-    char        *string;
     char         char_flag;
 
     char_flag = flag_test(input[*chr_count]);
-    if (char_flag == 1)
     // • %c Prints a single character.
-        return (1);
+    if (char_flag == 1)
+        ft_putchar(va_arg(args, char *));
+        *chr_count++;
 	else if (char_flag == 2)
     // • %s Prints a string (as defined by the common C convention).
-        return (2);
+
 	else if (char_flag == 3)
     // • %p The void * pointer argument has to be printed in hexadecimal format.
-        return (3);
+
 	else if (char_flag == 4)
     // • %d Prints a decimal (base 10) number.
-        return (4);
+
 	else if (char_flag == 5)
     // • %i Prints an integer in base 10.
-        return (5);
+
 	else if (char_flag == 6)
     // • %u Prints an unsigned decimal (base 10) number.
-        return (6);
+
 	else if (char_flag == 7)
     // • %x Prints a number in hexadecimal (base 16) lowercase format.
-        return (7);
+
 	else if (char_flag == 8)
     // • %X Prints a number in hexadecimal (base 16) uppercase format.
-        return (8);
+
 	else if (char_flag == 9)
     // • %% Prints a percent sign.
-        write(1, "%", 1);
+        ft_putchar('%');
+        *chr_count++;
     else
         return (-1);
-    (*chr_count) += 2;
-    va_arg(*args, *input)
 }
 
 int ft_printf(const char *input, ...)
@@ -109,14 +108,27 @@ int ft_printf(const char *input, ...)
     va_start(args, input);
     while (*input)
     {
-        if (input[chr_count] == '%' && input[chr_count + 1])
+        if (*input == '%' && *(input + 1))
 		{
-			if (flag_test(input[chr_count + 1]))
-				prcss_cnvrsn(input, &args, &chr_count);				
+			if (flag_test(*(input + 1)))
+				prcss_cnvrsn(&args, &chr_count);
+            input += 2;
 		}
+        else if (*input == '\\' && *(input + 1))
+        {
+            if (ft_isspace(*(input + 1)))
+            {
+                write(1, (input + 1), 1);
+                chr_count++;
+                input += 2;
+            }
+        }
         else
-            write(1, &(input[chr_count]), 1);
-        chr_count++;
+        {
+            write(1, input, 1);
+            chr_count++;
+            input += 1;
+        }
     }
     va_end(args);
 	return (chr_count);
