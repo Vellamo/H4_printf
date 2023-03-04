@@ -35,85 +35,95 @@ int_fast8_t flag_test (char test_chr)
 	int_fast8_t i = 0;
 	
     if (test_chr == 'c')
-        (i + 1);
+        return (1);
     else if (test_chr == 's')
-        (i + 2);
+        return (2);
     else if (test_chr == 'p') 
-        (i + 3);
+        return (3);
     else if (test_chr == 'd')
-        (i + 4);
+        return (4);
     else if (test_chr == 'i')
-        (i + 5); 
+        return (5);
     else if (test_chr == 'u')
-        (i + 6);
+        return (6);
 	else if (test_chr == 'x')
-        (i + 7);
+        return (7);
 	else if (test_chr == 'X')
-        (i + 8);
+        return (8);
 	else if (test_chr == '%')
-        (i + 9);
-    return (i);
+        return (9);
+    return (-1);
 }
 
 // cspdiuxX%
-// -0.# + 
 
-char    *printf_converter(char *input, t_flags *t_cnvrsn)
+int     prcss_cnvrsn(char *input, va_list *args, int *chr_count)
 {
-    if (t_cnvrsn->cnsvn_flag)
-        {
-            
-        }
-}
-
-int	prcss_cnvrsn(char *input, va_list *args, t_flags *t_cnvrsn)
-{
-    int         i;
     char        *string;
+    char         char_flag;
 
-    i = 1;
-    if (flag_test(input[chr_count + i])) 
-    {
-	    t_cnvrsn->char_flag = flag_test(input[chr_count + i]);
-        i++;
-    }
-    t_cnvrsn->chr_count += i;
-    arg_num++;
+    char_flag = flag_test(input[*chr_count]);
+    if (char_flag == 1)
+    // • %c Prints a single character.
+        return (1);
+	else if (char_flag == 2)
+    // • %s Prints a string (as defined by the common C convention).
+        return (2);
+	else if (char_flag == 3)
+    // • %p The void * pointer argument has to be printed in hexadecimal format.
+        return (3);
+	else if (char_flag == 4)
+    // • %d Prints a decimal (base 10) number.
+        return (4);
+	else if (char_flag == 5)
+    // • %i Prints an integer in base 10.
+        return (5);
+	else if (char_flag == 6)
+    // • %u Prints an unsigned decimal (base 10) number.
+        return (6);
+	else if (char_flag == 7)
+    // • %x Prints a number in hexadecimal (base 16) lowercase format.
+        return (7);
+	else if (char_flag == 8)
+    // • %X Prints a number in hexadecimal (base 16) uppercase format.
+        return (8);
+	else if (char_flag == 9)
+    // • %% Prints a percent sign.
+        write(1, "%", 1);
+    else
+        return (-1);
+    (*chr_count) += 2;
     va_arg(*args, *input)
-
 }
 
 int ft_printf(const char *input, ...)
 {
     *t_flags        t_cnvrsn;
     va_list         args;
+    int             chr_count;
  
     if (!input)    
         return (-1);
-    *t_cnvrsn = (t_flags)malloc(sizeof(t_flags));
-    t_cnvrsn->chr_count = 0;
+
+    chr_count = 0;
     va_start(args, input);
     while (*input)
     {
         if (input[chr_count] == '%' && input[chr_count + 1])
 		{
-			if (flag_test(input[t_cnvrsn->chr_count + 1]))
-				prcss_cnvrsn(input, &args, t_cnvrsn);				
+			if (flag_test(input[chr_count + 1]))
+				prcss_cnvrsn(input, &args, &chr_count);				
 		}
         else
-            write(1, *input, 1);
-        t_cnvrsn->chr_count++;
+            write(1, &(input[chr_count]), 1);
+        chr_count++;
     }
     va_end(args);
-	write(1, _cnvrsn->string, chr_count);
-    return (chr_count);
+	return (chr_count);
 }
 
 int main(int argc, char **argv)
 {
-    unsigned int    max_args;
-
-    max_args = 0;
 	if (argc <= 1)
 	{
 		fprintf(stderr, "Something went VERY wrong.\n");
