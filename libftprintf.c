@@ -22,35 +22,11 @@ Requirements:
     1000 0000 %c (1)    0100 0000 %s (2)    1100 0000 %p (3)
     0010 0000 %d (4)    1010 0000 %i (5)    0110 0000 %u (6)
     1110 0000 %x (7)    0001 0000 %X (8)    1001 0000 %% (9)
-	
-    t_flags.flag; 
-    - 1000 0000 (1)    0 0100 0000 (2)    . 0010 0000 (4)
-    # 0001 0000 (8)      0000 1000 (16)   + 0000 0100 (32)
 
 */
 
 #include "libftprintf.h"
 
-/* Uses 6 bits as flags for possible conversion */
-
-int_fast8_t cnsvn_test (char test_chr)
-{
-	int_fast8_t i = 0;
-	
-    if (test_chr == '-')
-        (i + 1);
-    if (test_chr == '0')
-        (i + 2);
-    if (test_chr == '.') 
-        (i + 4);
-    if (test_chr == '#')
-        (i + 8);
-    if (test_chr == ' ')
-        (i + 16); 
-    if (test_chr == '+')
-        (i + 32);
-    return (i);
-}
 
 /* Also uses bits, but in a lossy way where one flag may overwrite another */
 
@@ -90,20 +66,18 @@ char    *printf_converter(char *input, t_flags *t_cnvrsn)
         }
 }
 
-int	prcss_cnvrsn(char *input, int *chr_count, va_list *args, t_flags *t_cnvrsn)
+int	prcss_cnvrsn(char *input, va_list *args, t_flags *t_cnvrsn)
 {
     int         i;
     char        *string;
 
     i = 1;
-    while (flag_test(input[chr_count + i]) || (cnsvn_test(input[chr_count + i])))
+    if (flag_test(input[chr_count + i])) 
     {
 	    t_cnvrsn->char_flag = flag_test(input[chr_count + i]);
-        t_cnvrsn->cnsvn_flag |= cnsvn_test(input[chr_count + i]);
         i++;
     }
-    ft_strjoin(printf_converter(input), t_cnvrsn->string)
-    *chr_count += i;
+    t_cnvrsn->chr_count += i;
     arg_num++;
     va_arg(*args, *input)
 
@@ -112,27 +86,26 @@ int	prcss_cnvrsn(char *input, int *chr_count, va_list *args, t_flags *t_cnvrsn)
 int ft_printf(const char *input, ...)
 {
     *t_flags        t_cnvrsn;
-    int             chr_count;
     va_list         args;
  
     if (!input)    
         return (-1);
-    chr_count = 0;
     *t_cnvrsn = (t_flags)malloc(sizeof(t_flags));
+    t_cnvrsn->chr_count = 0;
     va_start(args, input);
-    while (input[chr_count])
+    while (*input)
     {
-        if (input[chr_count] == '%')
+        if (input[t_cnvrsn->chr_count] == '%')
 		{
-			if (flag_test(input[chr_count + 1]) || (cnsvn_test(input[chr_count + 1])))
-				prcss_cnvrsn(&(input[chr_count]), &chr_count, &args, t_cnvrsn);				
+			if (flag_test(input[t_cnvrsn->chr_count + 1]))
+				prcss_cnvrsn(input, &args, t_cnvrsn);				
 		}
         else
-            ft_strjoin(input[chr_count], t_cnvrsn->string);
-        chr_count++;
+            write(1, *input, 1);
+        t_cnvrsn->chr_count++;
     }
     va_end(args);
-    return (chr_count);
+    return (t_cnvrsn->chr_count);
 }
 
 int main(int argc, char **argv)

@@ -9,8 +9,7 @@
 int ft_printf(const char *, ...);
 typedef struct s_printf
 {
-    char            *string; 
-    int_fast8_t     cnrvsn;
+    int             chr_count;
     int_fast8_t     flag;
 }					t_printf;
 
