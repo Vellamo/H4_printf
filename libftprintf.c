@@ -44,7 +44,7 @@ void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
 
     char_flag = flag_test(input[*chr_count]);
     if (char_flag == 1)
-        string = (char *)va_arg(ap, char);
+        string = (char)va_arg(ap, int);
     if (char_flag == 2)
     {
     	string = va_arg(ap, char *);
@@ -61,6 +61,7 @@ void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
             ft_itoa_base((long long int)(va_arg(args, void *, 16)));
         else
             ft_itoa_base((long long int)(va_arg(args, int, 16)));
+        
     }
 	else if (char_flag == 9)
         string = "%";
