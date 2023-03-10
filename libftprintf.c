@@ -48,7 +48,7 @@ void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
     char_flag = flag_test(input[*chr_count]);
     if (char_flag == 1)
         string = (char)va_arg(ap, int);
-    if (char_flag == 2)
+    else if (char_flag == 2)
     {
     	string = va_arg(ap, char *);
 	    if (!(*string))
@@ -56,15 +56,15 @@ void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
     }
 	else if (char_flag == 4 || char_flag == 5 || char_flag == 6)
     {
-        string = ft_itoa((long long int)(va_arg(args, int)));
+        string = ft_itoa((int)(va_arg(args, int)));
     }
 	else if (char_flag == 3 || char_flag == 7 || char_flag == 8)
     {
         if (char_flag == 3) 
-            string = ft_itoa_base((long long int)(va_arg(args, void *, 16)), 16);
+            string = ft_itoa_base((int)(va_arg(args, void *)), 16);
         else
         {
-            string = ft_itoa_base((long long int)(va_arg(args, int, 16)), 16);
+            string = ft_itoa_base((int)(va_arg(args, int)), 16);
             if (char_flag == 8)
                 while (string[i])
                 {
