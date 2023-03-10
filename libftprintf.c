@@ -40,9 +40,9 @@ int_fast8_t flag_test (char test_chr)
 
 void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
 {
-    char    char_flag;
-    char    *string;
-    int     i;
+    int_fast8_t     char_flag;
+    char            *string;
+    int             i;
 
     i = 0;
     char_flag = flag_test(input[*chr_count]);
