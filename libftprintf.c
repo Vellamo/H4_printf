@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+#include "libft.h"
 
 /* Uses bits, but in a lossy way where one flag may overwrite another */
 
@@ -41,7 +42,9 @@ void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
 {
     char    char_flag;
     char    *string;
+    int     i;
 
+    i = 0;
     char_flag = flag_test(input[*chr_count]);
     if (char_flag == 1)
         string = (char)va_arg(ap, int);
@@ -58,16 +61,23 @@ void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
 	else if (char_flag == 3 || char_flag == 7 || char_flag == 8)
     {
         if (char_flag == 3) 
-            ft_itoa_base((long long int)(va_arg(args, void *, 16)));
+            string = ft_itoa_base((long long int)(va_arg(args, void *, 16)), 16);
         else
-            ft_itoa_base((long long int)(va_arg(args, int, 16)));
-        
+        {
+            string = ft_itoa_base((long long int)(va_arg(args, int, 16)), 16);
+            if (char_flag == 8)
+                while (string[i])
+                {
+                    string[i] = ft_toupper(string);
+                    i++;
+                }
+        }
     }
 	else if (char_flag == 9)
         string = "%";
     if (*string)
     {
-        ft_putstr_fd(string, 1);
+        ft_putstr_fd(string, ft_strlen(string));
         *chr_count += ft_strlen(string);
     }
 }
@@ -88,15 +98,6 @@ int ft_printf(const char *input, ...)
 			prcss_cnvrsn(&args, &chr_count, input);
             input += 2;
 		}
-        else if (*input == '\\' && *(input + 1))
-        {
-            if (ft_isspace(*(input + 1)))
-            {
-                ft_putchar_fd(*(input + 1), 1);
-                chr_count++;
-                input += 2;
-            }
-        }
         else
         {
             ft_putchar_fd(*input, 1);
