@@ -108,14 +108,3 @@ int ft_printf(const char *input, ...)
     va_end(args);
 	return (chr_count);
 }
-
-int main(int argc, char **argv)
-{
-	if (argc <= 1)
-	{
-		fprintf(stderr, "Something went VERY wrong.\n");
-		return (-1);
-	}
-
-
-}

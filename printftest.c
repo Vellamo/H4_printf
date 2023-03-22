@@ -1,7 +1,7 @@
 #include <stdio.h>
+#include "libft.h"
+#include "libftprintf.h"
 
-int main ()
-{
     /*
       The format string is a character string, beginning and ending in its initial shift  state,  if  any.
        The  format  string  is  composed of zero or more directives: ordinary characters (not %), which are
@@ -34,14 +34,65 @@ int main ()
 
                printf("%'.2f", 1234567.89);
     */
+    
+    /*
+        • %c Prints a single character.
+        • %s Prints a string (as defined by the common C convention).
+        • %p The void * pointer argument has to be printed in hexadecimal format.
+        • %d Prints a decimal (base 10) number.
+        • %i Prints an integer in base 10.
+        • %u Prints an unsigned decimal (base 10) number.
+        • %x Prints a number in hexadecimal (base 16) lowercase format.
+        • %X Prints a number in hexadecimal (base 16) uppercase format.
+        • %% Prints a percent sign.
+    */
 
+int main(int argc, char **argv)
+{
+	if (argc <= 1)
+	{
+		fprintf(stderr, "Something went VERY wrong.\n");
+		return (-1);
+	}
+
+    char    *test_c = "character test : %c \n";
+
+    char    chr1 = 'a';
+    char    chr2 = 'ä';
+    char    chr3 = '^';
+    char    chr4 = '%';
+    char    chr5 = '/';
+
+    char    *test_s = "string test : %s \n";
+
+    char    *str1 = "1234!#!#567890+!#¤´";
+    char    *str2 = "/0/0/0/0~~/-/";
+    char    *str3 = "a";
+    char    *str4 = "2234567892345678";
+    char    *str5 = "";
+
+    char    *test_p = "void * test : %p \n";
+    void    *vpoint1 = &chr1;
+    void    *vpoint2 = &str1;
+    void    *vpoint3 = &str2;
+
+    char    *test_d = "decimal (Base 10) test : %d \n";
+
+    char    *test_i = "integer (Base 10) test : %i \n";
+
+    char    *test_u = "unsigned decimal (Base 10) test : %u \n";
+
+    char    *test_x = "hexadecimal lcase (Base 16) test : %x \n";
+
+    char    *test_X = "hexadecimal ucase (Base 16) test : %X \n";
+
+    char    *test_percent = "print percent test : %% \n";
+
+    printf("TESTING BEGINS:");
     
-    printf("");
-    printf("");
-    printf("");
-    printf("");
-    printf("");
-    printf("");
-    
+    printf("%c", chr);
+    ft_printf("%c", chr);
+
+    printf("\n");
 
 }
