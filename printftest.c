@@ -90,8 +90,45 @@ int main(int argc, char **argv)
 
     printf("TESTING BEGINS:");
     
-    printf("%c", chr);
-    ft_printf("%c", chr);
+    printf(test_c, chr);
+    ft_printf(test_c, chr);
+
+	printf(".....
+	");
+
+	printf(test_c, chr2);
+    ft_printf(test_c, chr2);
+
+	printf(".....
+	");
+
+	printf(test_c, chr3);
+    ft_printf(test_c, chr3);
+
+	printf(".....
+	");
+
+	printf(test_s, str1);
+    ft_printf(test_s, str1);
+
+		printf(".....
+	");
+
+	printf(test_s, str2);
+    ft_printf(test_s, str2);
+
+		printf(".....
+	");
+
+	printf(test_p, vpoint1);
+    ft_printf(test_s, vpoint1);
+
+		printf(".....
+	");
+
+	printf(test_p, vpoint2);
+    ft_printf(test_s, vpoint2);
+
 
     printf("\n");
 

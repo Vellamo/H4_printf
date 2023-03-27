@@ -1,8 +1,7 @@
 #ifndef FTPRINTF_H
 # define FTPRINTF_H
 
-#include "libft.a"
-#include <stdib.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <stdarg.h>
 

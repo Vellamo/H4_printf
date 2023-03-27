@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include "libft.h"
 
 /* Uses bits, but in a lossy way where one flag may overwrite another */
 
@@ -47,24 +46,24 @@ void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
     i = 0;
     char_flag = flag_test(input[*chr_count]);
     if (char_flag == 1)
-        string = (char)va_arg(ap, int);
-    else if (char_flag == 2)
+        string = (char)va_arg(*args, int);
+    if (char_flag == 2)
     {
-    	string = va_arg(ap, char *);
+    	string = va_arg(*args, char *);
 	    if (!(*string))
 		    string = "(null)";
     }
-	else if (char_flag == 4 || char_flag == 5 || char_flag == 6)
+	if (char_flag == 4 || char_flag == 5 || char_flag == 6)
     {
-        string = ft_itoa((int)(va_arg(args, int)));
+        string = ft_itoa((int)(va_arg(*args, int)));
     }
-	else if (char_flag == 3 || char_flag == 7 || char_flag == 8)
+	if (char_flag == 3 || char_flag == 7 || char_flag == 8)
     {
         if (char_flag == 3) 
-            string = ft_itoa_base((int)(va_arg(args, void *)), 16);
+            string = ft_itoa_base((int)(va_arg(*args, void *)), 16);
         else
         {
-            string = ft_itoa_base((int)(va_arg(args, int)), 16);
+            string = ft_itoa_base((int)(va_arg(*args, int)), 16);
             if (char_flag == 8)
                 while (string[i])
                 {
@@ -73,7 +72,8 @@ void    prcss_cnvrsn(va_list *args, int *chr_count, const char *input)
                 }
         }
     }
-	else if (char_flag == 9)
+	if (char_flag == 9)
+		va_arg(*args, char *);
         string = "%";
     if (*string)
     {

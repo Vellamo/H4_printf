@@ -26,12 +26,12 @@ ADD_LIB :=  $(ARCHIVE) $(AR_FLAGS) $(NAME)
 
 all: $(NAME)
 
-$(NAME): $(OBJ) 
+$(NAME): $(OBJ) $(LIBFT)
 	$(COMPILE) $(OBJ) -o $@
 	$(ADD_LIB) $(OBJ)
 
 $(LIBFT):
-	$(MAKE) -C libft/make all
+	$(MAKE) -C libft/ all
 
 $(DIR_OBJ):
 	mkdir $@
@@ -41,7 +41,7 @@ $(DIR_OBJ)%.o:%.c | $(DIR_OBJ)
 
 clean:
 	rm -rf $(DIR_OBJ) 
-	$(MAKE) -C libft/make clean
+	$(MAKE) -C libft/ clean
 
 fclean: clean
 	rm -f $(NAME) 
