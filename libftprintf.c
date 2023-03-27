@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+#include "libft/libft.a"
 
 /* Uses bits, but in a lossy way where one flag may overwrite another */
 

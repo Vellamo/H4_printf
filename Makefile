@@ -8,30 +8,32 @@ HEDR := libftprintf.h
 
 DIR_SRC := sources/
 DIR_OBJ := obj/
-LIBFT := libft/
 VPATH = $(DIR_SRC)
 
 SRC = libftprintf.c
 OBJ = $(SRC:%.c=$(DIR_OBJ)%.o)
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror 
+CFLAGS := -Wall -Wextra -Werror -c
 COMPILE = $(CC) $(CFLAGS) 
 
 ARCHIVE := ar
 AR_FLAGS := rucs
 ADD_LIB :=  $(ARCHIVE) $(AR_FLAGS) $(NAME)
 
-.PHONY: all bonus clean fclean re
+LIBFT_PATH := libft/
+LIBFT = $(LIBFT_PATH)libft.a
 
-all: $(NAME)
+.PHONY: all bonus clean fclean re libft
 
-$(NAME): $(OBJ) $(LIBFT)
+all: $(NAME) 
+	
+$(NAME): $(LIBFT)
 	$(COMPILE) $(OBJ) -o $@
 	$(ADD_LIB) $(OBJ)
 
 $(LIBFT):
-	$(MAKE) -C libft/ all
+	$(MAKE) -C $(LIBFT_PATH) all
 
 $(DIR_OBJ):
 	mkdir $@
@@ -41,7 +43,7 @@ $(DIR_OBJ)%.o:%.c | $(DIR_OBJ)
 
 clean:
 	rm -rf $(DIR_OBJ) 
-	$(MAKE) -C libft/ clean
+	$(MAKE) -C $(LIBFT_PATH) clean
 
 fclean: clean
 	rm -f $(NAME) 
